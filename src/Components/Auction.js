@@ -1,7 +1,19 @@
 import React from 'react'
 import "./Auction.scss"
 
-const Auction = () => {
+const {useState} = React;
+
+const Auction = ({lastBid, setBid}) => {
+    const [ownBid, setOwnBid] = useState(0)
+    const handleBid = e => {
+        setOwnBid(e.target.value.toLocaleString())
+    }
+    const makeBid = () => {
+        if ((Number(ownBid) > Number(lastBid)) && (ownBid.length < 9))  {
+            setBid(ownBid)
+        }
+    }
+    const [openBid,setOpenBid] = useState(190000000)
     return (
         <div className="auction">
             <div className="featured-image">
@@ -20,16 +32,16 @@ Desain simpel dan sporty membuatnya menarik untuk dipermak menjadi lebih keren.<
                 <h5>Batas maksimal bid: 30/04/2021</h5>
                 <h6>Buka Harga</h6>
                 <div className="open-price">
-                    Rp. 190.000.000
+                    Rp. {openBid.toLocaleString()}
                 </div>
                 <h6>Bid Tertinggi</h6>
                 <div className="close-price">
-                    Rp. 234.000.000
+                    Rp. {Number(lastBid).toLocaleString()}
                 </div>
                 <h6>Masukan Bidmu</h6>
                 <div className="put-bid">
-                <input type="text" className="make-price" placeholder="_ _ _ . _ _ _ . _ _ _"/>
-                <button className="make-bid">KIRIM</button>
+                <input onChange={handleBid} type="text" className="make-price" placeholder="_ _ _ . _ _ _ . _ _ _"/>
+                <button className="make-bid" onMouseDown={makeBid}>KIRIM</button>
                 </div>
             </div>
         </div>
